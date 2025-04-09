@@ -1,10 +1,12 @@
-import DashBoard from "./components/DashBoard"
+// import DashBoard from "./components/DashBoard"
+import Result from "./components/Result"
 
 
 function App() {
   return (
     <div>
-      <DashBoard/>
+      
+      <Result/>
     </div>
   )
 }

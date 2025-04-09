@@ -3,11 +3,13 @@ import { useState } from "react";
 function DashBoard() {
   const [referenceString, setReferenceString] = useState("");
   const [frameSize, setFrameSize] = useState("");
+  const [algorithm, setAlgorithm] = useState("FIFO"); // Default Algorithm
 
   // Function to handle button click and log inputs
   const handleSimulation = () => {
     console.log("Reference String:", referenceString);
     console.log("Frame Size:", frameSize);
+    console.log("Selected Algorithm:", algorithm);
   };
 
   return (
@@ -44,6 +46,17 @@ function DashBoard() {
           value={frameSize}
           onChange={(e) => setFrameSize(e.target.value)}
         />
+
+        <label className="block text-gray-600">Choose Algorithm:</label>
+        <select
+          className="w-full p-2 border rounded-lg mb-4"
+          value={algorithm}
+          onChange={(e) => setAlgorithm(e.target.value)}
+        >
+          <option value="FIFO">FIFO</option>
+          <option value="LRU">LRU</option>
+          <option value="OPTIMAL">OPTIMAL</option>
+        </select>
 
         <button
           onClick={handleSimulation} // Call function on button click
