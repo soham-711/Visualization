@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const lru_controller_1 = require("../controller/lru_controller");
+const optimal_1 = require("../controller/optimal");
+const fifo_1 = require("../controller/fifo");
+const router = (0, express_1.Router)();
+router.get("/lru", lru_controller_1.getlru);
+router.get("/opt", optimal_1.getOptimal);
+router.get("/fifo", fifo_1.getfifo);
+exports.default = router;
