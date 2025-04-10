@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "build": "tsc -w",
+    "build": "tsc",
     "dev": "nodemon des/app.js",
     "con": "concurrently \"tsc -w\" \" nodemon ./des/app.js\"",
      "start": "node app.js"
