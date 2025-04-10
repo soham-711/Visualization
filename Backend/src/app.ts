@@ -1,11 +1,25 @@
-import express from 'express'
-const app=express();
-import algo_router  from "./router/AlgoRouter"
+import express from 'express';
+import cors from 'cors';
+import algo_router from "./router/AlgoRouter";
 
-app.get("/",(req,res)=>{
-    res.send("hell0")
-})
-app.use("/algorithm",algo_router)
-app.listen(4000,()=>{
-    console.log("server is running")
-})
+const app = express();
+
+// ✅ Correct CORS Middleware
+app.use(cors({
+    origin: "http://localhost:5173", // ✅ Your frontend URL (Vite)
+    methods: ["GET", "POST"],
+    credentials: true
+}));
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    console.log("Server hit: /");
+    res.send("Hello");
+});
+
+app.use("/algorithm", algo_router);
+
+app.listen(4000, () => {
+    console.log("🚀 Server is running on port 4000");
+});

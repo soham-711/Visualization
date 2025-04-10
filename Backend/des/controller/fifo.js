@@ -2,42 +2,53 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getfifo = void 0;
 const getfifo = (req, res) => {
-    let page = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2];
+    console.log(req.body);
+    let page = req.body.store;
+    let frame = req.body.frame;
     let n = page.length;
-    let frame = 3;
     let s = new Set();
+    let queue = [];
     let page_faults = 0;
-    const queue = [];
+    let page_hits = 0; // Track hits
     const result = [];
     for (let i = 0; i < n; i++) {
-        const pages = page[i];
+        let pages = page[i];
         let status;
-        if (s.has(page[i])) {
+        if (s.has(pages)) {
+            // If page is already in memory -> HIT
             status = "Hit";
+            page_hits++;
         }
         else {
-            page_faults++;
+            // If page is NOT in memory -> MISS
             status = "Miss";
-        }
-        if (s.size < frame) {
-            s.add(page[i]);
-            queue.push(page[i]);
-        }
-        else {
-            const oldest = queue.shift();
-            if (oldest !== undefined)
-                s.delete(oldest);
+            page_faults++;
+            if (s.size >= frame) {
+                // Remove the oldest page (FIFO)
+                const oldest = queue.shift();
+                if (oldest !== undefined)
+                    s.delete(oldest);
+            }
+            // Add new page
             s.add(pages);
             queue.push(pages);
         }
+        // Fill empty slots in the frame representation
+        let frameState = new Array(frame).fill("");
+        queue.forEach((value, index) => (frameState[index] = value));
+        // Store step
         result.push({
             page: pages,
-            frame: [...queue],
-            status
+            frame: frameState, // Updated to correctly show empty slots
+            status,
         });
     }
+    console.log(result);
     res.json({
         steps: result,
+        pageHits: page_hits,
+        pageMisses: page_faults,
+        hitRatio: (page_hits / n) * 100, // Percentage hit ratio
     });
 };
 exports.getfifo = getfifo;
