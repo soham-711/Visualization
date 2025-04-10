@@ -29,7 +29,7 @@ function DashBoard() {
 
     try {
       const response = await axios.post<{ result: number[] }>(
-        `http://localhost:4000/algorithm/${algorithm}`,
+        `https://visualization-00s8.onrender.com/algorithm/${algorithm}`,
         store
       );
 

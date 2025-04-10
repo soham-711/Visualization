@@ -6,7 +6,7 @@ const app = express();
 
 // ✅ Correct CORS Middleware
 app.use(cors({
-    origin: "http://localhost:5173", // ✅ Your frontend URL (Vite)
+    origin: "https://visualization-of-page-replacement-algo-f3nt.onrender.com", // ✅ Your frontend URL (Vite)
     methods: ["GET", "POST"],
     credentials: true
 }));
